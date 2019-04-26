@@ -1,0 +1,17 @@
+.Registration {
+    width: 300px;
+    margin-top: 150px;
+}
+
+.Registration input {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.Registration .alert {
+    margin-top: 50px;
+}
+
+.Registration .alert .list-group {
+    text-decoration: none;
+}

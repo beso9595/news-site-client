@@ -1,0 +1,25 @@
+.Login {
+    width: 300px;
+    margin-top: 150px;
+}
+
+.Login a {
+    float: left;
+}
+
+.Login button {
+    float: right;
+}
+
+.Login input {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.Login .alert {
+    margin-top: 100px;
+}
+
+.Login .alert .list-group {
+    text-decoration: none;
+}

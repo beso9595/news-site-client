@@ -1,0 +1,17 @@
+.Restore {
+    width: 300px;
+    margin-top: 150px;
+}
+
+.Restore input {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.Restore .alert {
+    margin-top: 50px;
+}
+
+.Restore .alert .list-group {
+    text-decoration: none;
+}
