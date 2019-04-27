@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import './SocialMedia.css';
-import Facebook from "./facebook/Facebook";
-import Twitter from "./twitter/Twitter";
-import Youtube from "./youtube/Youtube";
+import Facebook from "./Facebook";
+import Twitter from "./Twitter";
+import Youtube from "./Youtube";
 
 class SocialMedia extends Component {
 	render() {

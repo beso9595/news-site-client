@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import './NewsFeed.css';
+import './Feed.css';
 import Paging from "./paging/Paging";
 import Article from "./article/Article";
 
@@ -8,7 +8,7 @@ const textShortener = text => {
 	return (textArr.length > 50 ? (textArr.slice(0, 50)) : textArr).join(' ') + '...';
 };
 
-class NewsFeed extends Component {
+class Feed extends Component {
 
 	componentDidMount() {
 		const {search, category, page} = this.props;
@@ -50,4 +50,4 @@ class NewsFeed extends Component {
 	}
 }
 
-export default NewsFeed;
+export default Feed;

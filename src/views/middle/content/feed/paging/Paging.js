@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './Paging.css';
 import {Button, ButtonGroup} from 'reactstrap';
-import queryString from 'query-string';
+import Util from "../../../../../utils/Util";
 
 class Paging extends Component {
 	render() {
@@ -11,7 +11,7 @@ class Paging extends Component {
 			quantityArray.push(i + 1);
 		}
 		//
-		let queryOb = queryString.parse(window.location.search);
+		let queryOb = Util.parseQuery(window.location.search);
 		if (!queryOb.page) {
 			queryOb.page = 1;
 		}

@@ -1,17 +1,17 @@
 import React, {Component} from 'react';
 import {BrowserRouter, Route} from 'react-router-dom';
-import queryString from 'query-string';
 
 import './App.css';
 
-import Header from './top/header/Header.js'
-import About from "./about/About";
-import Contact from "./contact/Contact";
-import Content from './middle/content/Content';
-import Footer from './bottom/footer/Footer.js'
-import Login from './login/Login';
-import Registration from './registration/Registration';
-import Restore from './restore/Restore';
+import Header from './views/header/Header.js'
+import About from "./views/header/About";
+import Contact from "./views/header/Contact";
+import Content from './views/middle/content/Content';
+import Footer from './views/footer/Footer.js'
+import Login from './views/auth/login/Login';
+import Registration from './views/auth/registration/Registration';
+import Restore from './views/auth/restore/Restore';
+import Util from "./utils/Util";
 
 class App extends Component {
 	render() {
@@ -19,10 +19,9 @@ class App extends Component {
 			<div className="App">
 				<Header/>
 				<BrowserRouter>
-					<div>
 						<Route path="/" exact render={
 							(props) => {
-								const queryOb = queryString.parse(props.location.search) || {};
+								const queryOb = Util.parseQuery(props.location.search) || {};
 								return <Content
 									page={queryOb['page']}
 									search={queryOb['search']}
@@ -31,32 +30,11 @@ class App extends Component {
 								/>;
 							}
 						}/>
-						<Route path="/about" exact render={
-							() => {
-								return <About/>;
-							}
-						}/>
-						<Route path="/contact" exact render={
-							() => {
-								return <Contact/>;
-							}
-						}/>
-						<Route path="/login" exact render={
-							() => {
-								return <Login/>;
-							}
-						}/>
-						<Route path="/registration" exact render={
-							() => {
-								return <Registration/>;
-							}
-						}/>
-						<Route path="/restore" exact render={
-							() => {
-								return <Restore/>;
-							}
-						}/>
-					</div>
+						<Route path="/about" exact render={() => <About/>}/>
+						<Route path="/contact" exact render={() => <Contact/>}/>
+						<Route path="/login" exact render={() => <Login/>}/>
+						<Route path="/registration" exact render={() => <Registration/>}/>
+						<Route path="/restore" exact render={() => <Restore/>}/>
 				</BrowserRouter>
 				<Footer/>
 			</div>
