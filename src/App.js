@@ -6,7 +6,7 @@ import './App.css';
 import Header from './views/header/Header.js'
 import About from "./views/header/About";
 import Contact from "./views/header/Contact";
-import Content from './views/middle/content/Content';
+import Content from './views/content/Content';
 import Footer from './views/footer/Footer.js'
 import Login from './views/auth/login/Login';
 import Registration from './views/auth/registration/Registration';

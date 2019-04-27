@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './Paging.css';
 import {Button, ButtonGroup} from 'reactstrap';
-import Util from "../../../../../utils/Util";
+import Util from "../../../../utils/Util";
 
 class Paging extends Component {
 	render() {
