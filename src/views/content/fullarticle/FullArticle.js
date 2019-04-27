@@ -5,31 +5,37 @@ import TagSpace from "./tagspace/TagSpace";
 class FullArticle extends Component {
 
 	state = {
-		articleData: {}
+		data: {}
 	};
 
-	componentDidMount() {
-		debugger;
-		const {articleId} = this.props;
-		fetch('/article/' + articleId)
-			.then(response => response.json())
-			.then(articleData => {
-				this.setState({articleData});
-			});
+	async componentDidMount() {
+		const {id} = this.props;
+		try {
+			let response = await fetch('/article/' + id);
+			if (response.status === 200) {
+				let data = await response.json();
+				this.setState({data});
+			} else {
+				throw new Error(`repose status: ${response.status}`);
+			}
+		} catch (ex) {
+			alert('შეცდომა სტატიის ჩატვირთვისას');
+			console.log(ex.message);
+		}
 	}
 
 	render() {
-		const {articleData} = this.state;
-		const {articleId} = this.props;
+		const {data} = this.state;
+		const {id} = this.props;
 		return (
 			<div className="FullArticle">
 				<div>
-					<h1>{articleData.title || ''}</h1>
+					<h1>{data.title || ''}</h1>
 					<div>
-						{articleData.description || ''}
+						{data.description || ''}
 					</div>
 					<div>
-						<TagSpace articleId={articleId}/>
+						<TagSpace articleId={id}/>
 					</div>
 					<div>
 						comments

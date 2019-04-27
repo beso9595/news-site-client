@@ -3,9 +3,10 @@ import './Tag.css';
 
 class Tag extends Component {
 	render() {
+		const {id, name} = this.props;
 		return (
 			<div className="Tag">
-				<a href={'/article/tag/' + this.props.id}>{this.props.name}</a>
+				<a href={'/article/tag/' + id}>{name}</a>
 			</div>
 		);
 	}

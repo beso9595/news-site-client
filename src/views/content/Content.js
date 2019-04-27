@@ -14,7 +14,7 @@ class Content extends Component {
 				<Category/>
 				{
 					article ?
-						<FullArticle articleId={article}/> :
+						<FullArticle id={article}/> :
 						<Feed
 							page={page}
 							search={search}

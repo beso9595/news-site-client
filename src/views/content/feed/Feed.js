@@ -10,26 +10,37 @@ const textShortener = text => {
 
 class Feed extends Component {
 
-	componentDidMount() {
+	state = {
+		articles: [],
+		pages: 0
+	};
+
+	async componentDidMount() {
 		const {search, category, page} = this.props;
 		let url = '/article?page=' + (page || '') +
 			(search ? '&search=' + search : '') +
 			(category ? '&category=' + category : '');
-		fetch(url)
-			.then(response => response.json())
-			.then(data => {
-				this.setState(data);
-			});
+		try {
+			let response = await fetch(url);
+			if (response.status === 200) {
+				let responseObject = await response.json();
+				this.setState(responseObject);
+			} else {
+				throw new Error(`repose status: ${response.status}`);
+			}
+		} catch (ex) {
+			alert('შეცდომა სტატიების ჩატვირთვისას');
+			console.log(ex.message);
+		}
 	}
 
 	render() {
-		const articles = this.state && this.state.articles ? this.state.articles : [];
-		const pages = this.state && this.state.pages ? this.state.pages : 0;
+		const {articles, pages} = this.state;
 		return (
 			<div className="NewsFeed">
 				<div className="NewsFeed-Articles">
 					{
-						articles.map((article, i) => {
+						(articles || []).map((article, i) => {
 							return <Article
 								key={article.id + i}
 								title={article.title}

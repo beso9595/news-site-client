@@ -5,22 +5,33 @@ import Search from "../search/Search";
 
 class Category extends Component {
 
-	componentDidMount() {
-		fetch('/category')
-			.then(response => response.json())
-			.then(data => {
-				this.setState({categoryItems: data})
-			});
+	state = {
+		data: []
+	};
+
+	async componentDidMount() {
+		try {
+			let response = await fetch('/category');
+			if (response.status === 200) {
+				let data = await response.json();
+				this.setState({data});
+			} else {
+				throw new Error(`repose status: ${response.status}`);
+			}
+		} catch (ex) {
+			alert('შეცდომა კატეგორიების ჩატვირთვისას');
+			console.log(ex.message);
+		}
 	}
 
 	render() {
-		const categoryItems = this.state && this.state.categoryItems ? this.state.categoryItems : [];
+		const {data} = this.state;
 		return (
 			<div className="Category">
 				<Search/>
 				<ListGroup>
 					{
-						categoryItems.map((item, i) => {
+						(data || []).map((item, i) => {
 							return <ListGroupItem
 								key={i}
 								tag="a"

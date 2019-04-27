@@ -1,16 +1,36 @@
 import React, {Component} from 'react';
 import './TagSpace.css';
-
 import Tag from "./tag/Tag";
 
 class TagSpace extends Component {
+
+	state = {
+		data: []
+	};
+
+	async componentDidMount() {
+		const {articleId} = this.props;
+		try {
+			let response = await fetch('/tag/' + articleId);
+			if (response.status === 200) {
+				let data = await response.json();
+				this.setState({data});
+			} else {
+				throw new Error(`repose status: ${response.status}`);
+			}
+		} catch (ex) {
+			alert('შეცდომა ტეგების ჩატვირთვისას');
+			console.log(ex.message);
+		}
+	}
+
 	render() {
-		const tags = this.state && this.state.tags ? this.state.tags : [];
+		const data = this.state;
 		return (
 			<div className="Tag">
 				<b>Tags: </b>
 				{
-					tags.map((tag) => {
+					(data || []).map((tag) => {
 						return <Tag
 							id={tag.id}
 							key={tag.id}
@@ -20,14 +40,6 @@ class TagSpace extends Component {
 				}
 			</div>
 		);
-	}
-
-	componentDidMount() {
-		fetch('/tag/' + this.props.articleId)
-			.then(response => response.json())
-			.then(data => {
-				this.setState({tags: data})
-			});
 	}
 }
 

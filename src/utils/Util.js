@@ -7,5 +7,13 @@ export default {
 			query[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '');
 		}
 		return query;
+	},
+
+	buildQuery: queryOb => {
+		let url = '';
+		Object.keys(queryOb).forEach((k, i) => {
+			url += (i === 0 ? '?' : '&') + k + '=' + queryOb[k];
+		});
+		return url;
 	}
 };

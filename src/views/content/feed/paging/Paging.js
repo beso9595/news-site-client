@@ -3,28 +3,23 @@ import './Paging.css';
 import {Button, ButtonGroup} from 'reactstrap';
 import Util from "../../../../utils/Util";
 
+const buildQuery = (queryOb, page) => Util.buildQuery({...queryOb, page});
+
 class Paging extends Component {
+
 	render() {
-		const quantity = this.props.quantity || 1;
+		let {quantity} = this.props;
 		let quantityArray = [];
-		for (let i = 0; i < quantity; i++) {
-			quantityArray.push(i + 1);
+		if (quantity && quantity > 1) {
+			for (let i = 0; i < quantity; i++) {
+				quantityArray.push(i + 1);
+			}
 		}
 		//
 		let queryOb = Util.parseQuery(window.location.search);
 		if (!queryOb.page) {
 			queryOb.page = 1;
 		}
-		let buildQuery = n => {
-			let url = '';
-			Object.keys(queryOb).forEach((k, i) => {
-				url += (i === 0 ? '?' : '&') + k + '=' + (k === 'page' ? n : queryOb[k]);
-			});
-			return url;
-		};
-		let isCurrent = n => {
-			return parseInt(queryOb.page, 10) === n;
-		};
 		//
 		return (
 			<div className="Paging">
@@ -34,8 +29,8 @@ class Paging extends Component {
 							return <Button
 								key={n}
 								color="primary"
-								href={buildQuery(n)}
-								disabled={isCurrent(n)}
+								href={buildQuery(queryOb, n)}
+								disabled={parseInt(queryOb.page) === n}
 							>
 								{n}
 							</Button>
