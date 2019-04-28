@@ -4,29 +4,38 @@ import {Form, Input, FormGroup, Button, Alert, ListGroup, ListGroupItem} from 'r
 
 class Registration extends Component {
 
-	constructor(props) {
-		super(props);
+	state = {
+		credentials: {
+			email: null,
+			firstName: null,
+			lastName: null,
+			password: null,
+			passwordConfirm: null
+		},
+		visible: false,
+		success: false,
+		message: []
+	};
 
-		this.state = {
-			visible: false,
-			message: []
-		};
-	}
+	handleChange = e => {
+		this.setState({
+			credentials: {
+				...this.state.credentials,
+				[e.target.name]: e.target.value
+			}
+		});
+	};
 
-	onRegistration() {
-		const email = document.getElementById('email').value;
-		const firstname = document.getElementById('firstname').value;
-		const lastname = document.getElementById('lastname').value;
-		const password = document.getElementById('password').value;
-		const passwordRepeat = document.getElementById('password-repeat').value;
+	onRegistration = async () => {
+		const {email, firstName, lastName, password, passwordConfirm} = this.state.credentials;
 
 		const regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 		const message = [];
-		if (email && firstname && lastname && password && passwordRepeat) {
+		if (email && firstName && lastName && password && passwordConfirm) {
 			if (!regex.test(email)) {
 				message.push('Wrong email format');
 			}
-			if (password !== passwordRepeat) {
+			if (password !== passwordConfirm) {
 				message.push('Passwords doesn\'t match');
 			}
 		} else {
@@ -37,69 +46,106 @@ class Registration extends Component {
 			visible: !isValid,
 			message: message
 		});
-		const me = this;
 		//
 		if (isValid) {
-			fetch('/user/add', {
-				method: 'post',
-				headers: {
-					"Content-Type": "application/json; charset=utf-8"
-				},
-				body: JSON.stringify({
-					email,
-					firstname,
-					lastname,
-					password
-				})
-			}).then(function (response) {
-				return response.json();
-			}).then(function (data) {
-				if (data.exists) {
-					me.setState({
+			let response;
+			try {
+				response = await fetch('/user', {
+					method: 'post',
+					headers: {
+						"Content-Type": "application/json; charset=utf-8"
+					},
+					body: JSON.stringify({email, firstName, lastName, password})
+				});
+				let data = await response.json();
+				this.setState({
+					credentials: {
+						...this.state.credentials,
+						email: data.email
+					},
+					visible: true,
+					success: true,
+					message: [`Registered Successfully! Now you can check your email (${data.email}) for validating account.`]
+				});
+			} catch (ex) {
+				if (response && response.status) {
+					let message = 'Unknown error';
+					// eslint-disable-next-line default-case
+					switch (response.status) {
+						case 409:
+							message = 'User with this email already exists';
+							break;
+						case 500:
+							message = 'Internal error';
+							break;
+					}
+					this.setState({
 						visible: true,
-						message: ['User with <b>' + data.email + '</b> already exists']
+						success: false,
+						message: [message]
 					});
-				} else {
-					const el = document.getElementById('finish');
-					me.setState({
-						email: data.email,
-						hideForm: true
-					});
-					document.getElementById('registration').hidden = true;
-					el.hidden = null;
 				}
-			});
+				console.log(ex.message);
+			}
 		}
-	}
+	};
 
 	render() {
+		const {visible, message, success} = this.state;
+		const {email, firstName, lastName, password, passwordConfirm} = this.state.credentials;
 		return (
 			<div className="Registration">
 				<Form id="registration">
 					<FormGroup>
-						<Input type="mail" name="email" id="email" placeholder="Email"/>
-						<Input type="text" name="firstname" id="firstname" placeholder="Firstname"/>
-						<Input type="text" name="lastname" id="lastname" placeholder="Lastname"/>
-						<Input type="password" name="password" id="password" placeholder="Password"/>
-						<Input type="password" name="password-repeat" id="password-repeat" placeholder="Repeat"/>
+						<Input
+							type="mail"
+							name="email"
+							placeholder="E-mail"
+							onChange={this.handleChange}
+							value={email || ''}
+						/>
+						<Input
+							type="text"
+							name="firstName"
+							placeholder="First Name"
+							onChange={this.handleChange}
+							value={firstName || ''}
+						/>
+						<Input
+							type="text"
+							name="lastName"
+							placeholder="Last Name"
+							onChange={this.handleChange}
+							value={lastName || ''}
+						/>
+						<Input
+							type="password"
+							name="password"
+							placeholder="Password"
+							onChange={this.handleChange}
+							value={password || ''}
+						/>
+						<Input
+							type="password"
+							name="passwordConfirm"
+							placeholder="Password Confirm"
+							onChange={this.handleChange}
+							value={passwordConfirm || ''}
+						/>
 					</FormGroup>
-					<Button color="primary" onClick={() => this.onRegistration()}>Registration</Button>
+					<Button color="primary" onClick={this.onRegistration}>Registration</Button>
 				</Form>
-				<Alert color="info" isOpen={this.state.visible}>
+				<Alert color={success ? "success" : "danger"} isOpen={visible}>
 					<ListGroup>
 						{
-							this.state.message.map((item, i) => {
-								return <ListGroupItem key={i} color="info">
+							(message || []).map((item, i) => (
+								<ListGroupItem key={i} color={success ? "success" : "danger"}>
 									{item}
-								</ListGroupItem>;
-							})
+								</ListGroupItem>
+							))
 						}
 					</ListGroup>
 				</Alert>
-				<div id="finish" hidden>
-					Registered Successfully! Now you can check your email (<b>{this.state.email}</b>) for validating
-					account.
-				</div>
 			</div>
 		);
 	}
