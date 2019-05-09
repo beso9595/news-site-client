@@ -13,10 +13,10 @@ class Content extends Component {
 			<div>
 				<Container fluid>
 					<Row>
-						<Col xs={2} sm={2} lg={2}>
+						<Col lg={2}>
 							<Category/>
 						</Col>
-						<Col xs={8} sm={8} lg={8}>
+						<Col lg={8}>
 							{
 								article ?
 									<FullArticle id={article}/> :
@@ -27,7 +27,7 @@ class Content extends Component {
 									/>
 							}
 						</Col>
-						<Col xs={2} sm={2} lg={2}>
+						<Col lg={2}>
 							<TopNews/>
 						</Col>
 					</Row>

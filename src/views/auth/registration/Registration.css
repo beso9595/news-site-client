@@ -1,17 +1,24 @@
 .Registration {
-    width: 300px;
     margin-top: 150px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
 }
 
-.Registration input {
-    margin-top: 10px;
-    margin-bottom: 10px;
+.Registration-Form {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-.Registration .alert {
+.Registration-Form-FormGroup {
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.Registration-Form-Alert {
     margin-top: 50px;
-}
-
-.Registration .alert .list-group {
-    text-decoration: none;
 }

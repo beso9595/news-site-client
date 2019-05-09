@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './Registration.css';
-import {Form, Input, FormGroup, Button, Alert, ListGroup, ListGroupItem} from 'reactstrap';
+import {Form, Input, FormGroup, Button, Alert} from 'reactstrap';
 
 class Registration extends Component {
 
@@ -44,6 +44,7 @@ class Registration extends Component {
 		const isValid = message.length === 0;
 		this.setState({
 			visible: !isValid,
+			success: isValid,
 			message: message
 		});
 		//
@@ -95,8 +96,8 @@ class Registration extends Component {
 		const {email, firstName, lastName, password, passwordConfirm} = this.state.credentials;
 		return (
 			<div className="Registration">
-				<Form id="registration">
-					<FormGroup>
+				<Form className="Registration-Form">
+					<FormGroup className="Registration-Form-FormGroup">
 						<Input
 							type="mail"
 							name="email"
@@ -134,18 +135,16 @@ class Registration extends Component {
 						/>
 					</FormGroup>
 					<Button color="primary" onClick={this.onRegistration}>Registration</Button>
-				</Form>
-				<Alert color={success ? "success" : "danger"} isOpen={visible}>
-					<ListGroup>
+					<div className="Registration-Form-Alert">
 						{
 							(message || []).map((item, i) => (
-								<ListGroupItem key={i} color={success ? "success" : "danger"}>
+								<Alert key={i} color={success ? "success" : "danger"} isOpen={visible}>
 									{item}
-								</ListGroupItem>
+								</Alert>
 							))
 						}
-					</ListGroup>
-				</Alert>
+					</div>
+				</Form>
 			</div>
 		);
 	}
