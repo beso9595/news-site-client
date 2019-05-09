@@ -9,6 +9,7 @@ import {
 	ButtonGroup,
 	Button
 } from 'reactstrap';
+import './Header.css';
 
 class Header extends Component {
 	render() {

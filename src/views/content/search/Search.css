@@ -1,0 +1,13 @@
+.Search {
+    display: flex;
+    padding: 10px;
+}
+
+.Search-Input {
+    flex-grow: 1;
+    margin-right: 10px;
+}
+
+.Search-Button {
+    width: 100px;
+}

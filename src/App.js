@@ -4,8 +4,8 @@ import {BrowserRouter, Route} from 'react-router-dom';
 import './App.css';
 
 import Header from './views/header/Header.js'
-import About from "./views/header/About";
-import Contact from "./views/header/Contact";
+import About from "./views/header/menuitems/About";
+import Contact from "./views/header/menuitems/Contact";
 import Content from './views/content/Content';
 import Footer from './views/footer/Footer.js'
 import Login from './views/auth/login/Login';
@@ -18,7 +18,8 @@ class App extends Component {
 		return (
 			<div className="App">
 				<Header/>
-				<BrowserRouter>
+				<div style={{marginTop: 50}}>
+					<BrowserRouter>
 						<Route path="/" exact render={
 							(props) => {
 								const queryOb = Util.parseQuery(props.location.search) || {};
@@ -35,7 +36,8 @@ class App extends Component {
 						<Route path="/login" exact render={() => <Login/>}/>
 						<Route path="/registration" exact render={() => <Registration/>}/>
 						<Route path="/restore" exact render={() => <Restore/>}/>
-				</BrowserRouter>
+					</BrowserRouter>
+				</div>
 				<Footer/>
 			</div>
 		);

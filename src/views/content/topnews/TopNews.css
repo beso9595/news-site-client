@@ -1,7 +1,17 @@
 .TopNews {
-    /* background-color: coral; */
-    /*position: fixed;*/
-    /*right: 0;*/
-    width: 35%;
-    height: 100%;
+    padding: 10px;
+}
+
+.TopNews ul a {
+    text-decoration: none;
+    border-right: none;
+    border-left: none;
+}
+
+.TopNews ul a:first-child {
+    border-top: none;
+}
+
+.TopNews ul a:last-child {
+    border-bottom: none;
 }

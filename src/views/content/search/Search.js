@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import {Navbar, NavItem, Input, Button, Nav} from 'reactstrap';
+import {Input, Button} from 'reactstrap';
 import Util from "../../../utils/Util";
 import './Search.css';
 
-class Category extends Component {
+class Search extends Component {
 
 	state = {
 		value: null
@@ -39,34 +39,22 @@ class Category extends Component {
 	render() {
 		const {value} = this.state;
 		return (
-			<div className="Category">
-				<Navbar>
-					<Nav className="ml-auto" navbar>
-						<NavItem>
-							<Input
-								type="text"
-								name="search"
-								bsSize="sm"
-								onChange={this.onChange}
-								onKeyDown={this.onKeyDown}
-								value={value || ''}
-							/>
-						</NavItem>
-						<NavItem>
-							<Button
-								color="primary"
-								size="sm"
-								onClick={this.onSearch}
-								outline
-							>
-								Search
-							</Button>
-						</NavItem>
-					</Nav>
-				</Navbar>
+			<div className="Search">
+				<Input
+					type="text"
+					name="search"
+					bsSize="sm"
+					onChange={this.onChange}
+					onKeyDown={this.onKeyDown}
+					value={value || ''}
+					className="Search-Input"
+				/>
+				<Button color="primary" size="sm" onClick={this.onSearch} className="Search-Button" outline>
+					Search
+				</Button>
 			</div>
 		);
 	}
 }
 
-export default Category;
+export default Search;
