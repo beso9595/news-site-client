@@ -20,14 +20,15 @@ class App extends Component {
 				<Header/>
 				<div style={{marginTop: 50}}>
 					<BrowserRouter>
-						<Route path="/" exact render={
+						<Route path={['/', '/article/:id']} exact render={
 							(props) => {
-								const queryOb = Util.parseQuery(props.location.search) || {};
+								const queryParams = Util.parseQuery(props.location.search) || {};
+								const pathParams = props.match.params;
 								return <Content
-									page={queryOb['page']}
-									search={queryOb['search']}
-									category={queryOb['cat']}
-									article={queryOb['article']}
+									page={queryParams['page']}
+									search={queryParams['search']}
+									category={queryParams['cat']}
+									article={pathParams['id']}
 								/>;
 							}
 						}/>

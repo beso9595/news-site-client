@@ -25,7 +25,7 @@ class TagSpace extends Component {
 	}
 
 	render() {
-		const data = this.state;
+		const {data} = this.state;
 		return (
 			<div className="Tag">
 				<b>Tags: </b>
