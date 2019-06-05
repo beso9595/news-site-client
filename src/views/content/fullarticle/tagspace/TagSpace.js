@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './TagSpace.css';
 import Tag from "./tag/Tag";
+import {Col, Container, Row} from "reactstrap";
 
 class TagSpace extends Component {
 
@@ -27,17 +28,19 @@ class TagSpace extends Component {
 	render() {
 		const {data} = this.state;
 		return (
-			<div className="Tag">
-				<b>Tags: </b>
-				{
-					(data || []).map((tag) => {
-						return <Tag
-							id={tag.id}
-							key={tag.id}
-							name={'#' + tag.name}
-						/>;
-					})
-				}
+		    <div className="TagSpace">
+				<Container>
+					<Row>
+						<Col xs="auto"><b>Tags: </b></Col>
+						{
+							(data || []).map((tag) => {
+								return <Col xs="auto" key={tag.name} style={{paddingLeft: 0, paddingRight: 0}}>
+									<Tag id={tag.id} name={'#' + tag.name}/>
+								</Col>;
+							})
+						}
+					</Row>
+				</Container>
 			</div>
 		);
 	}

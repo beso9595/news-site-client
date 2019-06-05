@@ -1,0 +1,7 @@
+.FullArticle {
+	padding: 50px;
+}
+
+.FullArticle div:first-child {
+	padding: 10px;
+}
