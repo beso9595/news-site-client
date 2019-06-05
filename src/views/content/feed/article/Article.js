@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import './Article.css';
+import {Col, Container, Row} from "reactstrap";
 
 const parseDate = x => {
 	return x.getFullYear()
@@ -20,10 +21,12 @@ class Article extends Component {
 				<div className="Article-Content">
 					{content}
 				</div>
-				<div>
-					<b>{parsedDate || ' - '}</b>
-				</div>
-				<a href={url}>More >></a>
+				<Container>
+					<Row>
+						<Col xs="6" style={{textAlign: 'left'}}><b>{parsedDate || ' - '}</b></Col>
+						<Col xs="6" style={{textAlign: 'right'}}><a href={url}>Read more >></a></Col>
+					</Row>
+				</Container>
 			</div>
 		);
 	}
