@@ -28,7 +28,7 @@ class TagSpace extends Component {
 	render() {
 		const {data} = this.state;
 		return (
-		    <div className="TagSpace">
+			<div className="TagSpace">
 				<Container>
 					<Row>
 						<Col xs="auto"><b>Tags: </b></Col>
