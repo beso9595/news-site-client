@@ -1,6 +1,6 @@
 .Login {
     width: 300px;
-    margin-top: 150px;
+    margin: 200px auto auto;
 }
 
 .Login a {
@@ -18,8 +18,4 @@
 
 .Login .alert {
     margin-top: 100px;
-}
-
-.Login .alert .list-group {
-    text-decoration: none;
 }

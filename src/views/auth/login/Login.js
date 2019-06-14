@@ -1,21 +1,24 @@
 import React, {Component} from 'react';
 import './Login.css';
-import {Form, Input, FormGroup, Button, ListGroup, ListGroupItem, Alert} from 'reactstrap';
+import {Form, Input, FormGroup, Button, Alert} from 'reactstrap';
 
 class Login extends Component {
 
-	constructor(props) {
-		super(props);
+	state = {
+		email: null,
+		password: null,
+		visible: false,
+		message: []
+	};
 
-		this.state = {
-			visible: false,
-			message: []
-		};
-	}
+	handleChange = e => {
+		this.setState({
+			[e.target.name]: e.target.value
+		});
+	};
 
-	onLogin() {
-		const email = document.getElementById('email').value;
-		const password = document.getElementById('password').value;
+	onLogin = () => {
+		const {email, password} = this.state;
 
 		const regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 		const message = [];
@@ -35,30 +38,44 @@ class Login extends Component {
 		if (isValid) {
 			//login request
 		}
-	}
+	};
 
 	render() {
+		const {email, password, visible, message} = this.state;
 		return (
 			<div className="Login">
-				<Form>
+				<Form className="Login-Form">
 					<FormGroup>
-						<Input type="email" name="email" id="email" placeholder="Email"/>
-						<Input type="password" name="password" id="password" placeholder="Password"/>
+						<Input
+							type="email"
+							name="email"
+							placeholder="Email"
+							onChange={this.handleChange}
+							value={email || ''}
+						/>
+						<Input
+							type="password"
+							name="password"
+							placeholder="Password"
+							onChange={this.handleChange}
+							value={password || ''}
+						/>
 					</FormGroup>
 					<a href="/restore">Forgot Password?</a>
-					<Button color="primary" onClick={() => this.onLogin()}>Log In</Button>
+					<Button
+						color="primary"
+						onClick={this.onLogin}
+					>
+						Log In
+					</Button>
 				</Form>
-				<Alert color="info" isOpen={this.state.visible}>
-					<ListGroup>
-						{
-							this.state.message.map((item, i) => {
-								return <ListGroupItem key={i} color="info">
-									{item}
-								</ListGroupItem>;
-							})
-						}
-					</ListGroup>
-				</Alert>
+				{
+					message.map((item, i) => (
+						<Alert key={i} color="warning" isOpen={visible}>
+							{item}
+						</Alert>
+					))
+				}
 			</div>
 		);
 	}
