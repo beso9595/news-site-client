@@ -17,7 +17,7 @@ class Login extends Component {
 		});
 	};
 
-	onLogin = () => {
+	onLogin = async () => {
 		const {email, password} = this.state;
 
 		const regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
@@ -36,7 +36,27 @@ class Login extends Component {
 		});
 		//
 		if (isValid) {
-			//login request
+			try {
+				let response = await fetch('/user/login', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({email, password})
+				});
+				if (response.status === 200) {
+					let tokenObject = await response.text();
+					if (tokenObject) {
+						localStorage.setItem('tokenObject', JSON.parse(tokenObject));
+						document.location.href = "/";
+					}
+				} else {
+					throw new Error(`repose status: ${response.status}`);
+				}
+			} catch (ex) {
+				alert('დაფიქსირდა შეცდომა');
+				console.log(ex.message);
+			}
 		}
 	};
 

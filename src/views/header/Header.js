@@ -13,6 +13,7 @@ import './Header.css';
 
 class Header extends Component {
 	render() {
+		let isAuthenticated = !!localStorage.getItem('tokenObject');
 		return (
 			<div className="Header">
 				<Navbar light expand="md">
@@ -36,10 +37,17 @@ class Header extends Component {
 							</NavItem>
 						</Nav>
 					</Collapse>
-					<ButtonGroup>
-						<Button outline color="primary" href="/login">Login</Button>
-						<Button outline color="primary" href="/registration">Registration</Button>
-					</ButtonGroup>
+					{
+						isAuthenticated ?
+							<ButtonGroup>
+								<Button outline color="primary" href="/profile">Profile</Button>
+							</ButtonGroup>
+							:
+							<ButtonGroup>
+								<Button outline color="primary" href="/login">Login</Button>
+								<Button outline color="primary" href="/registration">Registration</Button>
+							</ButtonGroup>
+					}
 				</Navbar>
 			</div>
 		);
