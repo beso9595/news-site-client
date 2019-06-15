@@ -12,6 +12,12 @@ import {
 import './Header.css';
 
 class Header extends Component {
+
+	onLogout = () => {
+		localStorage.clear();
+		window.location.reload();
+	};
+
 	render() {
 		let isAuthenticated = !!localStorage.getItem('tokenObject');
 		return (
@@ -41,6 +47,7 @@ class Header extends Component {
 						isAuthenticated ?
 							<ButtonGroup>
 								<Button outline color="primary" href="/profile">Profile</Button>
+								<Button outline color="primary" href="#" onClick={this.onLogout}>Logout</Button>
 							</ButtonGroup>
 							:
 							<ButtonGroup>
