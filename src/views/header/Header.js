@@ -14,12 +14,12 @@ import './Header.css';
 class Header extends Component {
 
 	onLogout = () => {
-		localStorage.clear();
-		window.location.reload();
+		localStorage.removeItem('token');
+		document.location.href = "/";
 	};
 
 	render() {
-		let isAuthenticated = !!localStorage.getItem('tokenObject');
+		let isAuthenticated = !!localStorage.getItem('token');
 		return (
 			<div className="Header">
 				<Navbar light expand="md">

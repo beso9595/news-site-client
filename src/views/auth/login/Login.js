@@ -45,9 +45,9 @@ class Login extends Component {
 					body: JSON.stringify({email, password})
 				});
 				if (response.status === 200) {
-					let tokenObject = await response.text();
-					if (tokenObject) {
-						localStorage.setItem('tokenObject', JSON.parse(tokenObject));
+					let token = await response.text();
+					if (token) {
+						localStorage.setItem('token', token);
 						document.location.href = "/";
 					}
 				} else {
